@@ -41,5 +41,6 @@ com\yoprogramo\portfolioweb\PortfoliowebApplication.class
 com\yoprogramo\portfolioweb\security\entity\Rol.class
 com\yoprogramo\portfolioweb\security\service\RolService.class
 com\yoprogramo\portfolioweb\service\ServiceSkills.class
+com\yoprogramo\portfolioweb\util\CreateRoles.class
 com\yoprogramo\portfolioweb\controller\SkillsController.class
 com\yoprogramo\portfolioweb\repository\AcercaDeRepository.class
