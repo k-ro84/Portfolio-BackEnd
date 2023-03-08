@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/experience")
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins="*")
 public class ExperienceController {
     
      @Autowired
@@ -40,20 +40,31 @@ public class ExperienceController {
     
    @GetMapping("/detail/{id}")
    public ResponseEntity<Experience> getById(@PathVariable("id")int id){
-      if(!serviceExperience.existsById(id)) {
-          return new ResponseEntity(new Mensaje("ID invalid,please try again"),HttpStatus.OK);
-      }
-      
+      if(!serviceExperience.existsById(id)) 
+          return new ResponseEntity(new Mensaje("ID invalid,please try again"),HttpStatus.NOT_FOUND);
+    
       Experience experience =serviceExperience.getOne(id).get();
         return new ResponseEntity(experience,HttpStatus.OK);
-   
    }
    
-   @PostMapping ("/create")
+   @GetMapping("/detailname/{empresa}")
+    public ResponseEntity<Experience> getByNombre(@PathVariable("empresa") String empresa){
+        if(!serviceExperience.existsByEmpresa(empresa))
+            return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+        Experience experience = serviceExperience.getByEmpresa(empresa).get();
+        return new ResponseEntity(experience, HttpStatus.OK);
+    }
+   
+   
+   
+   @PostMapping("/create")
    public ResponseEntity <?> create(@RequestBody DtoExperience Dtoexperience){
-       if(StringUtils.isBlank(Dtoexperience.getEmpresa())){
-            return new ResponseEntity(new Mensaje("El nombre de la empresa/lugar de trabajo es obligatorio"),HttpStatus.OK);
-       }
+       if(StringUtils.isBlank(Dtoexperience.getEmpresa()))
+            return new ResponseEntity(new Mensaje("El nombre de la empresa/lugar de trabajo es obligatorio"),HttpStatus.BAD_REQUEST);
+     
+       if(serviceExperience.existsByEmpresa(Dtoexperience.getEmpresa()))
+            return new ResponseEntity(new Mensaje("lugar de trabajo ya existente"),HttpStatus.BAD_REQUEST);
+       
       Experience experience = new Experience(Dtoexperience.getEmpresa(),
              Dtoexperience.getPuesto(),
              Dtoexperience.getPeriodo(),
@@ -62,15 +73,16 @@ public class ExperienceController {
           return new ResponseEntity(new Mensaje("Empresa/lugar de trabajo creada/o con exito!"),HttpStatus.OK);
    }
    
-   @PutMapping ("/update/{id}")
+   @PutMapping("/update/{id}")
      public ResponseEntity <?> update( @PathVariable("id")int id,@RequestBody DtoExperience Dtoexperience){
-      if(!serviceExperience.existsById(id)) {
+      if(!serviceExperience.existsById(id))
          return new ResponseEntity(new Mensaje("ID inexistente "),HttpStatus.NOT_FOUND);
-      } 
-       if(StringUtils.isBlank(Dtoexperience.getEmpresa())){
+      
+       if(StringUtils.isBlank(Dtoexperience.getEmpresa()))
             return new ResponseEntity(new Mensaje("El nombre de la empresa/lugar de trabajo es obligatorio"),HttpStatus.OK);
-       }
+       
        Experience experience = serviceExperience.getOne(id).get();
+             experience.setEmpresa(Dtoexperience.getEmpresa());
              experience.setPuesto(Dtoexperience.getPuesto());
              experience.setPeriodo(Dtoexperience.getPeriodo());
               experience.setActividades(Dtoexperience.getActividades() );
@@ -79,12 +91,11 @@ public class ExperienceController {
      }
      
      
-     @DeleteMapping ("/delete/{id}")
+     @DeleteMapping("/delete/{id}")
      public ResponseEntity <?> delete(@PathVariable("id")int id){
-         if(!serviceExperience.existsById(id)) {
+         if(!serviceExperience.existsById(id)) 
          return new ResponseEntity(new Mensaje("este ID no existe "),HttpStatus.NOT_FOUND);  
-      
-     }
+
          serviceExperience.delete(id);
          return new ResponseEntity(new Mensaje("empresa/lugar de trabajo eliminada/o"), HttpStatus.OK);
          

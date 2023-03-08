@@ -4,7 +4,7 @@
  */
 package com.yoprogramo.portfolioweb.repository;
 
-import com.yoprogramo.portfolioweb.entity.AcercaDe;
+
 import com.yoprogramo.portfolioweb.entity.Skills;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;

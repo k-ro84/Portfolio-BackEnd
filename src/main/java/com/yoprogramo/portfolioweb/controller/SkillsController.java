@@ -24,7 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/skills")
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins="*")
+
 public class SkillsController {
     
      @Autowired
@@ -41,50 +42,64 @@ public class SkillsController {
     
    @GetMapping("/detail/{id}")
    public ResponseEntity<Skills> getById(@PathVariable("id")int id){
-      if(!serviceSkills.existsById(id)) {
-          return new ResponseEntity(new Mensaje("ID invalid,please try again"),HttpStatus.OK);
-      }
+      if(!serviceSkills.existsById(id))
+          return new ResponseEntity(new Mensaje("ID invalid,please try again"),HttpStatus.BAD_REQUEST);
       
       Skills skills =serviceSkills.getOne(id).get();
         return new ResponseEntity(skills,HttpStatus.OK);
-   
    }
    
-   @PostMapping ("/create")
+    @GetMapping("/detailname/{tecnologia}")
+    public ResponseEntity<Skills> getByNombre(@PathVariable("tecnologia") String tecnologia){
+        if(!serviceSkills.existsByTecnologia(tecnologia))
+            return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+        Skills skills = serviceSkills.getByTecnologia(tecnologia).get();
+        return new ResponseEntity(skills, HttpStatus.OK);
+    }
+   
+   
+   @PostMapping("/create")
    public ResponseEntity <?> create(@RequestBody DtoSkills Dtoskills){
-       if(StringUtils.isBlank(Dtoskills.getTecnologia())){
-            return new ResponseEntity(new Mensaje("nombre de Skill es obigatorio"),HttpStatus.OK);
-       }
+       if(StringUtils.isBlank(Dtoskills.getTecnologia()))
+            return new ResponseEntity(new Mensaje("nombre de Skill es obigatorio"),HttpStatus.BAD_REQUEST);
+        
+       if(serviceSkills.existsByTecnologia(Dtoskills.getTecnologia()))
+            return new ResponseEntity(new Mensaje("Skill ya existente"),HttpStatus.BAD_REQUEST);
+       
        Skills skills = new Skills(Dtoskills.getTecnologia(),
-            Dtoskills.getPorcentaje() );
+                                  Dtoskills.getPorcentaje());
              
          serviceSkills.save(skills);
           return new ResponseEntity(new Mensaje("Skill creada con exito!"),HttpStatus.OK);
    }
    
-   @PutMapping ("/update/{id}")
+   @PutMapping("/update/{id}")
      public ResponseEntity <?> update( @PathVariable("id")int id,@RequestBody DtoSkills Dtoskills){
-      if(!serviceSkills.existsById(id)) {
+      if(!serviceSkills.existsById(id)) 
          return new ResponseEntity(new Mensaje("ID inexistente "),HttpStatus.NOT_FOUND);
-      } 
-       if(StringUtils.isBlank(Dtoskills.getTecnologia())){
-            return new ResponseEntity(new Mensaje("nombre de Skill es obigatorio"),HttpStatus.OK);
-       }
+      
+       if(serviceSkills.existsByTecnologia(Dtoskills.getTecnologia())&& 
+               serviceSkills.getByTecnologia(Dtoskills.getTecnologia()).get().getId()!=id)
+         return new ResponseEntity(new Mensaje("nombre ya registrado/intente con otra tecnología"),HttpStatus.BAD_REQUEST);
+       
+       if(StringUtils.isBlank(Dtoskills.getTecnologia()))
+         return new ResponseEntity(new Mensaje("nombre de Skill es obigatorio"),HttpStatus.BAD_REQUEST);
+      
        Skills skills= serviceSkills.getOne(id).get();
              skills.setTecnologia(Dtoskills.getTecnologia());
              skills.setPorcentaje(Dtoskills.getPorcentaje());
+            
              
          serviceSkills.save(skills);
           return new ResponseEntity(new Mensaje("Skill actualizada!"),HttpStatus.OK);
      }
      
     
-     @DeleteMapping ("/delete/{id}")
+     @DeleteMapping("/delete/{id}")
      public ResponseEntity <?> delete(@PathVariable("id")int id){
-         if(!serviceSkills.existsById(id)) {
+         if(!serviceSkills.existsById(id))
          return new ResponseEntity(new Mensaje("este ID no existe "),HttpStatus.NOT_FOUND);  
-      
-     }
+  
          serviceSkills.delete(id);
          return new ResponseEntity(new Mensaje("Skill eliminada"), HttpStatus.OK);
          

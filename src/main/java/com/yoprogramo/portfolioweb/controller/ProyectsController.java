@@ -24,11 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/proyects")
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins="*")
+//el origin va sin el espacio entre el h... y los dos puntos http ://localhost:4200
 public class ProyectsController {
-    
+    @Autowired
      ServiceProyects serviceProyects;
-     
      
      
       @GetMapping("/lista")
@@ -40,20 +40,32 @@ public class ProyectsController {
     
    @GetMapping("/detail/{id}")
    public ResponseEntity<Proyects> getById(@PathVariable("id")int id){
-      if(!serviceProyects.existsById(id)) {
-          return new ResponseEntity(new Mensaje("ID invalid,please try again"),HttpStatus.OK);
-      }
+      if(!serviceProyects.existsById(id)) 
+          return new ResponseEntity(new Mensaje("ID invalid,please try again"),HttpStatus.NOT_FOUND);
+     
       
      Proyects proyects =serviceProyects.getOne(id).get();
         return new ResponseEntity(proyects,HttpStatus.OK);
-   
    }
    
-   @PostMapping ("/create")
+   @GetMapping("/detailname/{tituloProyecto}")
+    public ResponseEntity<Proyects> getByNombre(@PathVariable("tituloProyecto") String tituloProyecto){
+        if(!serviceProyects.existsByTituloProyecto(tituloProyecto))
+            return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+        Proyects proyects = serviceProyects.getByTituloProyecto(tituloProyecto).get();
+        return new ResponseEntity(proyects, HttpStatus.OK);
+    }
+   
+   
+   @PostMapping("/create")
    public ResponseEntity <?> create(@RequestBody DtoProyects Dtoproyects){
-       if(StringUtils.isBlank(Dtoproyects.getTituloProyecto())){
-            return new ResponseEntity(new Mensaje("El nombre es obigatorio"),HttpStatus.OK);
-       }
+       if(StringUtils.isBlank(Dtoproyects.getTituloProyecto()))
+            return new ResponseEntity(new Mensaje("El nombre es obigatorio"),HttpStatus.BAD_REQUEST);
+       
+       if(serviceProyects.existsByTituloProyecto(Dtoproyects.getTituloProyecto()))
+            return new ResponseEntity(new Mensaje("titulo de proyecto ya existente"),HttpStatus.BAD_REQUEST);
+      
+       
        Proyects proyects = new Proyects(Dtoproyects.getTituloProyecto(),
              Dtoproyects.getDescripcion() ,
              Dtoproyects.getUrl());
@@ -61,29 +73,28 @@ public class ProyectsController {
           return new ResponseEntity(new Mensaje("Proyecto creado con exito!"),HttpStatus.OK);
    }
    
-   @PutMapping ("/update/{id}")
+   @PutMapping("/update/{id}")
      public ResponseEntity <?> update( @PathVariable("id")int id,@RequestBody DtoProyects Dtoproyects){
-      if(!serviceProyects.existsById(id)) {
+      if(!serviceProyects.existsById(id)) 
          return new ResponseEntity(new Mensaje("ID inexistente "),HttpStatus.NOT_FOUND);
-      } 
-       if(StringUtils.isBlank(Dtoproyects.getTituloProyecto())){
+      
+       if(StringUtils.isBlank(Dtoproyects.getTituloProyecto()))
             return new ResponseEntity(new Mensaje("El nombre es obigatorio"),HttpStatus.OK);
-       }
+       
        Proyects proyects = serviceProyects.getOne(id).get();
-             proyects.setTituloProyecto(Dtoproyects.getTituloProyecto()); ;
-             proyects.setDescripcion(Dtoproyects.getDescripcion()); ;
-             proyects.setUrl(Dtoproyects.getUrl()) ;
+             proyects.setTituloProyecto(Dtoproyects.getTituloProyecto()); 
+             proyects.setDescripcion(Dtoproyects.getDescripcion()); 
+             proyects.setUrl(Dtoproyects.getUrl());
          serviceProyects.save(proyects);
           return new ResponseEntity(new Mensaje("Proyecto actualizado!"),HttpStatus.OK);
      }
      
      
-     @DeleteMapping ("/delete/{id}")
+     @DeleteMapping("/delete/{id}")
      public ResponseEntity <?> delete(@PathVariable("id")int id){
-         if(!serviceProyects.existsById(id)) {
+         if(!serviceProyects.existsById(id)) 
          return new ResponseEntity(new Mensaje("este ID no existe "),HttpStatus.NOT_FOUND);  
-      
-     }
+
          serviceProyects.delete(id);
          return new ResponseEntity(new Mensaje("Proyecto eliminado"), HttpStatus.OK);
          

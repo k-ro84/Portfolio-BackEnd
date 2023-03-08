@@ -19,16 +19,21 @@ public class DtoAcercaDe {
     private String direccion;
     @NotBlank
     private String descripcion;
-
+     @NotBlank
+    private String imgUser;
+     
     public DtoAcercaDe() {
     }
 
-    public DtoAcercaDe(String nombre, String apellido, String direccion, String descripcion) {
+    public DtoAcercaDe(String nombre, String apellido, String direccion, String descripcion, String imgUser) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.direccion = direccion;
         this.descripcion = descripcion;
+        this.imgUser = imgUser;
     }
+
+   
 
     public String getNombre() {
         return nombre;
@@ -60,6 +65,14 @@ public class DtoAcercaDe {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getImgUser() {
+        return imgUser;
+    }
+
+    public void setImgUser(String imgUser) {
+        this.imgUser = imgUser;
     }
 
     

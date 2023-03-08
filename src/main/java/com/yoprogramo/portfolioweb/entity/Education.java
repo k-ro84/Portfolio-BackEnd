@@ -9,31 +9,37 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Education {
     
     @Id
-     @GeneratedValue(strategy=GenerationType.AUTO)
+     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
     
     @NotNull
     private String institucion;
-    private int periodo;
+    private String periodo;
     private String detalles;
     private String estado;
     private String tituloEduc;
-
+    @Size(max=100)
+    private String imagEstud;
+    
     public Education() {
     }
 
-    public Education(String institucion, int periodo, String detalles, String estado, String tituloEduc) {
+    public Education(String institucion, String periodo, String detalles, String estado, String tituloEduc, String imagEstud) {
         this.institucion = institucion;
         this.periodo = periodo;
         this.detalles = detalles;
         this.estado = estado;
         this.tituloEduc = tituloEduc;
+        this.imagEstud = imagEstud;
     }
+
+   
 
     public int getId() {
         return id;
@@ -51,11 +57,11 @@ public class Education {
         this.institucion = institucion;
     }
 
-    public int getPeriodo() {
+    public String getPeriodo() {
         return periodo;
     }
 
-    public void setPeriodo(int periodo) {
+    public void setPeriodo(String periodo) {
         this.periodo = periodo;
     }
 
@@ -81,6 +87,14 @@ public class Education {
 
     public void setTituloEduc(String tituloEduc) {
         this.tituloEduc = tituloEduc;
+    }
+
+    public String getImagEstud() {
+        return imagEstud;
+    }
+
+    public void setImagEstud(String imagEstud) {
+        this.imagEstud = imagEstud;
     }
     
     

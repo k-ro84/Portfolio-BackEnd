@@ -12,24 +12,29 @@ public class DtoEducation {
      @NotBlank
     private String institucion;
      @NotBlank
-    private int periodo;
+    private String periodo;
      @NotBlank
     private String detalles;
      @NotBlank
     private String estado;
      @NotBlank
     private String tituloEduc;
+     @NotBlank
+     private String imagEstud;
 
     public DtoEducation() {
     }
 
-    public DtoEducation(String institucion, int periodo, String detalles, String estado, String tituloEduc) {
+    public DtoEducation(String institucion, String periodo, String detalles, String estado, String tituloEduc, String imagEstud) {
         this.institucion = institucion;
         this.periodo = periodo;
         this.detalles = detalles;
         this.estado = estado;
         this.tituloEduc = tituloEduc;
+        this.imagEstud = imagEstud;
     }
+
+  
 
     public String getInstitucion() {
         return institucion;
@@ -39,11 +44,11 @@ public class DtoEducation {
         this.institucion = institucion;
     }
 
-    public int getPeriodo() {
+    public String getPeriodo() {
         return periodo;
     }
 
-    public void setPeriodo(int periodo) {
+    public void setPeriodo(String periodo) {
         this.periodo = periodo;
     }
 
@@ -69,6 +74,14 @@ public class DtoEducation {
 
     public void setTituloEduc(String tituloEduc) {
         this.tituloEduc = tituloEduc;
+    }
+
+    public String getImagEstud() {
+        return imagEstud;
+    }
+
+    public void setImagEstud(String imagEstud) {
+        this.imagEstud = imagEstud;
     }
      
      

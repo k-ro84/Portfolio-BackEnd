@@ -25,11 +25,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/acercaDe")
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class AcercaDeController {
    
     @Autowired
    ServiceAcercaDe serviceAcercaDe;
+    
    @GetMapping("/lista")
     public ResponseEntity<List <AcercaDe>> list(){
         List<AcercaDe> list = serviceAcercaDe.list();
@@ -39,52 +40,67 @@ public class AcercaDeController {
     
    @GetMapping("/detail/{id}")
    public ResponseEntity<AcercaDe> getById(@PathVariable("id")int id){
-      if(!serviceAcercaDe.existsById(id)) {
-          return new ResponseEntity(new Mensaje("ID invalid,please try again"),HttpStatus.OK);
-      }
+      if(!serviceAcercaDe.existsById(id)) 
+          return new ResponseEntity(new Mensaje("ID invalid,please try again."),HttpStatus.NOT_FOUND);
       
       AcercaDe acercaDe =serviceAcercaDe.getOne(id).get();
         return new ResponseEntity(acercaDe,HttpStatus.OK);
    
    }
    
-   @PostMapping ("/create")
+   
+   @GetMapping("/detailname/{nombre}")
+    public ResponseEntity<AcercaDe> getByNombre(@PathVariable("nombre") String nombre){
+        if(!serviceAcercaDe.existsByNombre(nombre))
+            return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+        AcercaDe acercaDe = serviceAcercaDe.getByNombre(nombre).get();
+        return new ResponseEntity(acercaDe, HttpStatus.OK);
+    }
+   
+   @PostMapping("/create")
    public ResponseEntity <?> create(@RequestBody DtoAcercaDe DtoacercaDe){
-       if(StringUtils.isBlank(DtoacercaDe.getNombre())){
-            return new ResponseEntity(new Mensaje("El nombre es obligatorio"),HttpStatus.OK);
-       }
+       if(StringUtils.isBlank(DtoacercaDe.getNombre()))
+            return new ResponseEntity(new Mensaje("El nombre es obligatorio"),HttpStatus.BAD_REQUEST);
+       
+       if(serviceAcercaDe.existsByNombre(DtoacercaDe.getNombre()))
+            return new ResponseEntity(new Mensaje("nombre ya existente"),HttpStatus.BAD_REQUEST);
+       
        AcercaDe acercaDe = new AcercaDe(DtoacercaDe.getNombre(),
-             DtoacercaDe.getApellido(),
+               DtoacercaDe.getApellido(),
                DtoacercaDe.getDireccion(),
-               DtoacercaDe.getDescripcion()  );
+               DtoacercaDe.getDescripcion(),
+               DtoacercaDe.getImgUser());
          serviceAcercaDe.save(acercaDe);
           return new ResponseEntity(new Mensaje("Persona creada con exito!"),HttpStatus.OK);
    }
    
-   @PutMapping ("/update/{id}")
+   @PutMapping("/update/{id}")
      public ResponseEntity <?> update( @PathVariable("id")int id,@RequestBody DtoAcercaDe DtoacercaDe){
-      if(!serviceAcercaDe.existsById(id)) {
+      if(!serviceAcercaDe.existsById(id)) 
          return new ResponseEntity(new Mensaje("ID inexistente "),HttpStatus.NOT_FOUND);
-      } 
-       if(StringUtils.isBlank(DtoacercaDe.getNombre())){
+      if(serviceAcercaDe.existsByNombre(DtoacercaDe.getNombre())&& 
+               serviceAcercaDe.getByNombre(DtoacercaDe.getNombre()).get().getId()!=id)
+         return new ResponseEntity(new Mensaje("nombre ya registrado/intente con otro"),HttpStatus.BAD_REQUEST);
+        
+       if(StringUtils.isBlank(DtoacercaDe.getNombre()))
             return new ResponseEntity(new Mensaje("El nombre es obligatorio"),HttpStatus.OK);
-       }
+       
        AcercaDe acercaDe = serviceAcercaDe.getOne(id).get();
              acercaDe.setNombre(DtoacercaDe.getNombre());
              acercaDe.setApellido(DtoacercaDe.getApellido());
              acercaDe.setDireccion(DtoacercaDe.getDireccion());
              acercaDe.setDescripcion(DtoacercaDe.getDescripcion());
+             acercaDe.setImgUser(DtoacercaDe.getImgUser());
          serviceAcercaDe.save(acercaDe);
           return new ResponseEntity(new Mensaje("Persona actualizada!"),HttpStatus.OK);
      }
      
      
-     @DeleteMapping ("/delete/{id}")
+     @DeleteMapping("/delete/{id}")
      public ResponseEntity <?> delete(@PathVariable("id")int id){
          if(!serviceAcercaDe.existsById(id)) {
          return new ResponseEntity(new Mensaje("este ID no existe "),HttpStatus.NOT_FOUND);  
-      
-     }
+         }
          serviceAcercaDe.delete(id);
          return new ResponseEntity(new Mensaje("Persona eliminada"), HttpStatus.OK);
          

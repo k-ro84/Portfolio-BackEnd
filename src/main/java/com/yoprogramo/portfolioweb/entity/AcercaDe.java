@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class AcercaDe {
@@ -20,19 +21,27 @@ public class AcercaDe {
     private String nombre;
      @NotNull
     private String apellido;
+      @NotNull
     private String direccion;
+       @NotNull
     private String descripcion;
-
+      @NotNull 
+      @Size(max=250)
+    private String imgUser;
+   
     public AcercaDe() {
     }
 
-    public AcercaDe(String nombre, String apellido, String direccion, String descripcion) {
+    public AcercaDe(String nombre, String apellido, String direccion, String descripcion, String imgUser) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.direccion = direccion;
         this.descripcion = descripcion;
+        this.imgUser = imgUser;
     }
 
+   
+  
     public int getId() {
         return id;
     }
@@ -71,6 +80,14 @@ public class AcercaDe {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getImgUser() {
+        return imgUser;
+    }
+
+    public void setImgUser(String imgUser) {
+        this.imgUser = imgUser;
     }
 
     

@@ -12,15 +12,17 @@ public class DtoSkills {
      @NotBlank
     private String tecnologia;
       @NotBlank
-    private long porcentaje;
+    private int porcentaje;
 
     public DtoSkills() {
     }
 
-    public DtoSkills(String tecnologia, long porcentaje) {
+    public DtoSkills(String tecnologia, int porcentaje) {
         this.tecnologia = tecnologia;
         this.porcentaje = porcentaje;
     }
+
+  
 
     public String getTecnologia() {
         return tecnologia;
@@ -30,13 +32,15 @@ public class DtoSkills {
         this.tecnologia = tecnologia;
     }
 
-    public long getPorcentaje() {
+    public int getPorcentaje() {
         return porcentaje;
     }
 
-    public void setPorcentaje(long porcentaje) {
+    public void setPorcentaje(int porcentaje) {
         this.porcentaje = porcentaje;
     }
+
+   
       
       
     

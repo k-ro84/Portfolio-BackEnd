@@ -8,25 +8,32 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Skills {
     
       @Id
-     @GeneratedValue(strategy=GenerationType.AUTO)
+     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-
+    @NotNull
     private String tecnologia;
-    private long porcentaje;
+    @Min(0)
+    @Max(100)
+    private int porcentaje;
 
     public Skills() {
     }
 
-    public Skills(String tecnologia, long porcentaje) {
+    public Skills(String tecnologia, int porcentaje) {
         this.tecnologia = tecnologia;
         this.porcentaje = porcentaje;
     }
 
+
+   
     public int getId() {
         return id;
     }
@@ -43,13 +50,14 @@ public class Skills {
         this.tecnologia = tecnologia;
     }
 
-    public long getPorcentaje() {
+    public int getPorcentaje() {
         return porcentaje;
     }
 
-    public void setPorcentaje(long porcentaje) {
+    public void setPorcentaje(int porcentaje) {
         this.porcentaje = porcentaje;
     }
+
     
     
     
