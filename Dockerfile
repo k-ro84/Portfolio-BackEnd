@@ -1,4 +1,4 @@
-FROM amazoncorretto:11-alpine-jdk 
+FROM amazoncorretto:8-alpine-jdk 
 MAINTAINER k-rito 
-COPY target/portfolioweb-0.0.1-SNAPSHOT.jar portfolioweb-app.jar 
-ENTRYPOINT ["java","-jar","/portfolioweb-app.jar"] 
+COPY target/portfolioweb-0.0.1-SNAPSHOT.jar portfolioweb-0.0.1-SNAPSHOT.jar
+ENTRYPOINT ["java","-jar","/portfolioweb-0.0.1-SNAPSHOT.jar"] 
