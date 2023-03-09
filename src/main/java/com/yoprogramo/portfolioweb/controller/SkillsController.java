@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("/skills")
@@ -57,7 +58,7 @@ public class SkillsController {
         return new ResponseEntity(skills, HttpStatus.OK);
     }
    
-   
+   @PreAuthorize("hasRole('ADMIN')")
    @PostMapping("/create")
    public ResponseEntity <?> create(@RequestBody DtoSkills Dtoskills){
        if(StringUtils.isBlank(Dtoskills.getTecnologia()))
@@ -73,6 +74,7 @@ public class SkillsController {
           return new ResponseEntity(new Mensaje("Skill creada con exito!"),HttpStatus.OK);
    }
    
+   @PreAuthorize("hasRole('ADMIN')")
    @PutMapping("/update/{id}")
      public ResponseEntity <?> update( @PathVariable("id")int id,@RequestBody DtoSkills Dtoskills){
       if(!serviceSkills.existsById(id)) 
@@ -94,7 +96,7 @@ public class SkillsController {
           return new ResponseEntity(new Mensaje("Skill actualizada!"),HttpStatus.OK);
      }
      
-    
+    @PreAuthorize("hasRole('ADMIN')")
      @DeleteMapping("/delete/{id}")
      public ResponseEntity <?> delete(@PathVariable("id")int id){
          if(!serviceSkills.existsById(id))

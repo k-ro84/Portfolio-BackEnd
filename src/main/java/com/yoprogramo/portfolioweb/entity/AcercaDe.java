@@ -17,15 +17,14 @@ public class AcercaDe {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-    @NotNull
+  
     private String nombre;
-     @NotNull
+   
     private String apellido;
-      @NotNull
+
     private String direccion;
-       @NotNull
+    
     private String descripcion;
-      @NotNull 
       @Size(max=250)
     private String imgUser;
    

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("/proyects")
@@ -56,7 +57,7 @@ public class ProyectsController {
         return new ResponseEntity(proyects, HttpStatus.OK);
     }
    
-   
+   @PreAuthorize("hasRole('ADMIN')")
    @PostMapping("/create")
    public ResponseEntity <?> create(@RequestBody DtoProyects Dtoproyects){
        if(StringUtils.isBlank(Dtoproyects.getTituloProyecto()))
@@ -73,6 +74,7 @@ public class ProyectsController {
           return new ResponseEntity(new Mensaje("Proyecto creado con exito!"),HttpStatus.OK);
    }
    
+   @PreAuthorize("hasRole('ADMIN')")
    @PutMapping("/update/{id}")
      public ResponseEntity <?> update( @PathVariable("id")int id,@RequestBody DtoProyects Dtoproyects){
       if(!serviceProyects.existsById(id)) 
@@ -89,7 +91,7 @@ public class ProyectsController {
           return new ResponseEntity(new Mensaje("Proyecto actualizado!"),HttpStatus.OK);
      }
      
-     
+     @PreAuthorize("hasRole('ADMIN')")
      @DeleteMapping("/delete/{id}")
      public ResponseEntity <?> delete(@PathVariable("id")int id){
          if(!serviceProyects.existsById(id)) 

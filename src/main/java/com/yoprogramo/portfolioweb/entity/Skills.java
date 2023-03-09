@@ -18,7 +18,7 @@ public class Skills {
       @Id
      @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-    @NotNull
+  
     private String tecnologia;
     @Min(0)
     @Max(100)

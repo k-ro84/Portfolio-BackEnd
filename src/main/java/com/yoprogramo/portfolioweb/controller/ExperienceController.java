@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("/experience")
@@ -56,7 +57,7 @@ public class ExperienceController {
     }
    
    
-   
+   @PreAuthorize("hasRole('ADMIN')")
    @PostMapping("/create")
    public ResponseEntity <?> create(@RequestBody DtoExperience Dtoexperience){
        if(StringUtils.isBlank(Dtoexperience.getEmpresa()))
@@ -73,6 +74,7 @@ public class ExperienceController {
           return new ResponseEntity(new Mensaje("Empresa/lugar de trabajo creada/o con exito!"),HttpStatus.OK);
    }
    
+   @PreAuthorize("hasRole('ADMIN')")
    @PutMapping("/update/{id}")
      public ResponseEntity <?> update( @PathVariable("id")int id,@RequestBody DtoExperience Dtoexperience){
       if(!serviceExperience.existsById(id))
@@ -90,7 +92,7 @@ public class ExperienceController {
           return new ResponseEntity(new Mensaje("empresa/lugar de trabajo actualizada/o!"),HttpStatus.OK);
      }
      
-     
+     @PreAuthorize("hasRole('ADMIN')")
      @DeleteMapping("/delete/{id}")
      public ResponseEntity <?> delete(@PathVariable("id")int id){
          if(!serviceExperience.existsById(id)) 

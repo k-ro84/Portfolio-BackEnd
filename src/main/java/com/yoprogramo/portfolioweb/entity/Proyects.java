@@ -16,7 +16,7 @@ public class Proyects {
    @Id
      @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-   @NotNull
+  
     private String tituloProyecto;
     private String descripcion;
     private String url;

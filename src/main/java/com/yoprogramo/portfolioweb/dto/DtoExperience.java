@@ -15,7 +15,7 @@ public class DtoExperience {
     private String puesto;
     @NotBlank
     private String periodo;
-    @NotBlank
+   @NotBlank
     private String actividades;
 
     public DtoExperience() {

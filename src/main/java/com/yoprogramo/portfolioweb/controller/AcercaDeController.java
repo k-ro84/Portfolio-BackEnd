@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("/acercaDe")
@@ -57,6 +58,7 @@ public class AcercaDeController {
         return new ResponseEntity(acercaDe, HttpStatus.OK);
     }
    
+      @PreAuthorize("hasRole('ADMIN')")
    @PostMapping("/create")
    public ResponseEntity <?> create(@RequestBody DtoAcercaDe DtoacercaDe){
        if(StringUtils.isBlank(DtoacercaDe.getNombre()))
@@ -74,6 +76,7 @@ public class AcercaDeController {
           return new ResponseEntity(new Mensaje("Persona creada con exito!"),HttpStatus.OK);
    }
    
+     @PreAuthorize("hasRole('ADMIN')")
    @PutMapping("/update/{id}")
      public ResponseEntity <?> update( @PathVariable("id")int id,@RequestBody DtoAcercaDe DtoacercaDe){
       if(!serviceAcercaDe.existsById(id)) 
@@ -95,7 +98,7 @@ public class AcercaDeController {
           return new ResponseEntity(new Mensaje("Persona actualizada!"),HttpStatus.OK);
      }
      
-     
+       @PreAuthorize("hasRole('ADMIN')")
      @DeleteMapping("/delete/{id}")
      public ResponseEntity <?> delete(@PathVariable("id")int id){
          if(!serviceAcercaDe.existsById(id)) {

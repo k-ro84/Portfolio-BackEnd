@@ -11,7 +11,7 @@ public class DtoSkills {
     
      @NotBlank
     private String tecnologia;
-      @NotBlank
+     @NotBlank
     private int porcentaje;
 
     public DtoSkills() {

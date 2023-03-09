@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("/education")
@@ -57,7 +58,7 @@ public class EducationController {
     }
    
    
-    
+    @PreAuthorize("hasRole('ADMIN')")
    @PostMapping("/create")
    public ResponseEntity <?> create(@RequestBody DtoEducation Dtoeducation){
        if(StringUtils.isBlank(Dtoeducation.getInstitucion()))
@@ -76,6 +77,8 @@ public class EducationController {
           return new ResponseEntity(new Mensaje("nivel educativo creado con exito!"),HttpStatus.OK);
    }
   
+   
+   @PreAuthorize("hasRole('ADMIN')")
    @PutMapping("/update/{id}")
      public ResponseEntity <?> update( @PathVariable("id")int id,@RequestBody DtoEducation Dtoeducation){
       if(!serviceEducation.existsById(id)) 
@@ -99,7 +102,7 @@ public class EducationController {
           return new ResponseEntity(new Mensaje("Institucion/centro educativo actualizada/o!"),HttpStatus.OK);
      }
      
-      
+      @PreAuthorize("hasRole('ADMIN')")
      @DeleteMapping("/delete/{id}")
      public ResponseEntity <?> delete(@PathVariable("id")int id){
          if(!serviceEducation.existsById(id)) 

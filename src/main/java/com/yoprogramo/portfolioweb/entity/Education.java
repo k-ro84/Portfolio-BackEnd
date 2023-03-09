@@ -18,7 +18,6 @@ public class Education {
      @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
     
-    @NotNull
     private String institucion;
     private String periodo;
     private String detalles;
