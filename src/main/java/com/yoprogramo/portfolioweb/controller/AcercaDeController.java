@@ -31,13 +31,14 @@ public class AcercaDeController {
    
     @Autowired
    ServiceAcercaDe serviceAcercaDe;
+  
     
    @GetMapping("/lista")
     public ResponseEntity<List <AcercaDe>> list(){
         List<AcercaDe> list = serviceAcercaDe.list();
         return new ResponseEntity(list,HttpStatus.OK);
     }
-    
+ 
     
    @GetMapping("/detail/{id}")
    public ResponseEntity<AcercaDe> getById(@PathVariable("id")int id){
@@ -49,7 +50,7 @@ public class AcercaDeController {
    
    }
    
-   
+  
    @GetMapping("/detailname/{nombre}")
     public ResponseEntity<AcercaDe> getByNombre(@PathVariable("nombre") String nombre){
         if(!serviceAcercaDe.existsByNombre(nombre))
@@ -58,6 +59,7 @@ public class AcercaDeController {
         return new ResponseEntity(acercaDe, HttpStatus.OK);
     }
    
+    
       @PreAuthorize("hasRole('ADMIN')")
    @PostMapping("/create")
    public ResponseEntity <?> create(@RequestBody DtoAcercaDe DtoacercaDe){
