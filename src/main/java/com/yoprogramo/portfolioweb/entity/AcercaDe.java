@@ -17,15 +17,19 @@ public class AcercaDe {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-  
+    
+   @NotNull
+    @Size(min = 1, max = 50, message = "no cumple con la longitud")
     private String nombre;
    
+    @NotNull
+    @Size(min = 1, max = 50, message = "no cumple con la longitud")
     private String apellido;
 
     private String direccion;
     
     private String descripcion;
-      @Size(max=250)
+    
     private String imgUser;
    
     public AcercaDe() {

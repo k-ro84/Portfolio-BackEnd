@@ -23,7 +23,7 @@ public class Education {
     private String detalles;
     private String estado;
     private String tituloEduc;
-    @Size(max=100)
+ 
     private String imagEstud;
     
     public Education() {

@@ -58,7 +58,7 @@ public class SkillsController {
         return new ResponseEntity(skills, HttpStatus.OK);
     }
    
-   @PreAuthorize("hasRole('ADMIN')")
+  // @PreAuthorize("hasRole('ADMIN')")
    @PostMapping("/create")
    public ResponseEntity <?> create(@RequestBody DtoSkills Dtoskills){
        if(StringUtils.isBlank(Dtoskills.getTecnologia()))
@@ -74,7 +74,7 @@ public class SkillsController {
           return new ResponseEntity(new Mensaje("Skill creada con exito!"),HttpStatus.OK);
    }
    
-   @PreAuthorize("hasRole('ADMIN')")
+   // // // @PreAuthorize("hasRole('ADMIN')")
    @PutMapping("/update/{id}")
      public ResponseEntity <?> update( @PathVariable("id")int id,@RequestBody DtoSkills Dtoskills){
       if(!serviceSkills.existsById(id)) 
@@ -96,16 +96,15 @@ public class SkillsController {
           return new ResponseEntity(new Mensaje("Skill actualizada!"),HttpStatus.OK);
      }
      
-    @PreAuthorize("hasRole('ADMIN')")
-     @DeleteMapping("/delete/{id}")
-     public ResponseEntity <?> delete(@PathVariable("id")int id){
-         if(!serviceSkills.existsById(id))
+      //@PreAuthorize("hasRole('ADMIN')")
+       @DeleteMapping("/delete/{id}")
+        public ResponseEntity <?> delete(@PathVariable("id")int id){
+         if(!serviceSkills.existsById(id)) {
          return new ResponseEntity(new Mensaje("este ID no existe "),HttpStatus.NOT_FOUND);  
-  
+         }
          serviceSkills.delete(id);
-         return new ResponseEntity(new Mensaje("Skill eliminada"), HttpStatus.OK);
+         return new ResponseEntity(new Mensaje(" Skill eliminada/o"), HttpStatus.OK);
          
-     }   
-     
+     } 
      
 }

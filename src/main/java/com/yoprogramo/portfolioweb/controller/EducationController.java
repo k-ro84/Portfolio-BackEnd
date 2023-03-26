@@ -78,7 +78,7 @@ public class EducationController {
    }
   
    
-   @PreAuthorize("hasRole('ADMIN')")
+     // //@PreAuthorize("hasRole('ADMIN')")
    @PutMapping("/update/{id}")
      public ResponseEntity <?> update( @PathVariable("id")int id,@RequestBody DtoEducation Dtoeducation){
       if(!serviceEducation.existsById(id)) 
@@ -102,18 +102,17 @@ public class EducationController {
           return new ResponseEntity(new Mensaje("Institucion/centro educativo actualizada/o!"),HttpStatus.OK);
      }
      
-      @PreAuthorize("hasRole('ADMIN')")
-     @DeleteMapping("/delete/{id}")
+      // @PreAuthorize("hasRole('ADMIN')") 
+     
+      @DeleteMapping("/delete/{id}")
      public ResponseEntity <?> delete(@PathVariable("id")int id){
-         if(!serviceEducation.existsById(id)) 
+         if(!serviceEducation.existsById(id)) {
          return new ResponseEntity(new Mensaje("este ID no existe "),HttpStatus.NOT_FOUND);  
-      
+         }
          serviceEducation.delete(id);
          return new ResponseEntity(new Mensaje("Institucion/centro educativo eliminada/o"), HttpStatus.OK);
          
      }   
-     
-     
      
      
 }

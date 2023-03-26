@@ -22,7 +22,7 @@ public class JwtEntryPoint implements AuthenticationEntryPoint {
     //public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        logger.error("fail en el método commence ");
+        logger.error("fail metodo commence ");
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
     }
     

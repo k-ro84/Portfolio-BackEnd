@@ -57,7 +57,7 @@ public class ProyectsController {
         return new ResponseEntity(proyects, HttpStatus.OK);
     }
    
-   @PreAuthorize("hasRole('ADMIN')")
+   //@PreAuthorize("hasRole('ADMIN')")
    @PostMapping("/create")
    public ResponseEntity <?> create(@RequestBody DtoProyects Dtoproyects){
        if(StringUtils.isBlank(Dtoproyects.getTituloProyecto()))
@@ -74,7 +74,7 @@ public class ProyectsController {
           return new ResponseEntity(new Mensaje("Proyecto creado con exito!"),HttpStatus.OK);
    }
    
-   @PreAuthorize("hasRole('ADMIN')")
+   //@PreAuthorize("hasRole('ADMIN')")
    @PutMapping("/update/{id}")
      public ResponseEntity <?> update( @PathVariable("id")int id,@RequestBody DtoProyects Dtoproyects){
       if(!serviceProyects.existsById(id)) 
@@ -91,16 +91,16 @@ public class ProyectsController {
           return new ResponseEntity(new Mensaje("Proyecto actualizado!"),HttpStatus.OK);
      }
      
-     @PreAuthorize("hasRole('ADMIN')")
-     @DeleteMapping("/delete/{id}")
+    // @PreAuthorize("hasRole('ADMIN')")
+   @DeleteMapping("/delete/{id}")
      public ResponseEntity <?> delete(@PathVariable("id")int id){
-         if(!serviceProyects.existsById(id)) 
+         if(!serviceProyects.existsById(id)) {
          return new ResponseEntity(new Mensaje("este ID no existe "),HttpStatus.NOT_FOUND);  
-
+         }
          serviceProyects.delete(id);
-         return new ResponseEntity(new Mensaje("Proyecto eliminado"), HttpStatus.OK);
+         return new ResponseEntity(new Mensaje(" Proyecto eliminado"), HttpStatus.OK);
          
-     }   
+     } 
      
      
 }

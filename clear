@@ -1,0 +1,53 @@
+[33mcommit a7ff67178f01deff5bb195374875691323c27445[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Carolina Olguin <k-rito469@hotmail.com>
+Date:   Wed Mar 8 22:01:42 2023 -0300
+
+    changes dockerfile/jwt
+
+[33mcommit 613ea4356f5cc5eb3fd66a72fca7f2493b217f48[m
+Author: Carolina Olguin <k-rito469@hotmail.com>
+Date:   Wed Mar 8 21:19:42 2023 -0300
+
+    changes dockerfile
+
+[33mcommit 482279a3a0700dc64052a3c8815eaef67ecf4a6b[m
+Author: Carolina Olguin <k-rito469@hotmail.com>
+Date:   Wed Mar 8 17:22:11 2023 -0300
+
+    change dockerfile/passphp
+
+[33mcommit b2dc46a53cf9cfc2d535c1263617ae1e53701836[m
+Author: Carolina Olguin <k-rito469@hotmail.com>
+Date:   Wed Mar 8 16:18:29 2023 -0300
+
+    arreglos dockerfile
+
+[33mcommit be9f436cb0d70656182243b06b0674ac8b4a4763[m
+Author: Carolina Olguin <k-rito469@hotmail.com>
+Date:   Tue Mar 7 23:24:04 2023 -0300
+
+    correcciones dockerfile
+
+[33mcommit 555c9a97d117be54cb3845302b6e45727ac044dd[m
+Author: Carolina Olguin <k-rito469@hotmail.com>
+Date:   Tue Mar 7 22:42:34 2023 -0300
+
+    correccion dockerfile
+
+[33mcommit 547684ccb5974e9d4a54a8eaf2841b567cf2539c[m
+Author: Carolina Olguin <k-rito469@hotmail.com>
+Date:   Tue Mar 7 22:27:03 2023 -0300
+
+    correcion dockerfile
+
+[33mcommit 7d61c079ba413886f7b45f4b6b9108f911461ef9[m
+Author: Carolina Olguin <k-rito469@hotmail.com>
+Date:   Tue Mar 7 21:34:39 2023 -0300
+
+    marzo Dockerfile
+
+[33mcommit 6ad18777a118ce4d806632ea4904e6cdf00c8a52[m
+Author: Carolina Olguin <k-rito469@hotmail.com>
+Date:   Thu Jan 5 21:39:04 2023 -0300
+
+    creacion de primer back

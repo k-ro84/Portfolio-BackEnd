@@ -57,7 +57,7 @@ public class ExperienceController {
     }
    
    
-   @PreAuthorize("hasRole('ADMIN')")
+   //@PreAuthorize("hasRole('ADMIN')")
    @PostMapping("/create")
    public ResponseEntity <?> create(@RequestBody DtoExperience Dtoexperience){
        if(StringUtils.isBlank(Dtoexperience.getEmpresa()))
@@ -74,7 +74,7 @@ public class ExperienceController {
           return new ResponseEntity(new Mensaje("Empresa/lugar de trabajo creada/o con exito!"),HttpStatus.OK);
    }
    
-   @PreAuthorize("hasRole('ADMIN')")
+  // @PreAuthorize("hasRole('ADMIN')")
    @PutMapping("/update/{id}")
      public ResponseEntity <?> update( @PathVariable("id")int id,@RequestBody DtoExperience Dtoexperience){
       if(!serviceExperience.existsById(id))
@@ -92,14 +92,14 @@ public class ExperienceController {
           return new ResponseEntity(new Mensaje("empresa/lugar de trabajo actualizada/o!"),HttpStatus.OK);
      }
      
-     @PreAuthorize("hasRole('ADMIN')")
+     //@PreAuthorize("hasRole('ADMIN')")
      @DeleteMapping("/delete/{id}")
      public ResponseEntity <?> delete(@PathVariable("id")int id){
-         if(!serviceExperience.existsById(id)) 
+         if(!serviceExperience.existsById(id)) {
          return new ResponseEntity(new Mensaje("este ID no existe "),HttpStatus.NOT_FOUND);  
-
+         }
          serviceExperience.delete(id);
-         return new ResponseEntity(new Mensaje("empresa/lugar de trabajo eliminada/o"), HttpStatus.OK);
+         return new ResponseEntity(new Mensaje(" empresa/lugar de trabajo eliminada/o"), HttpStatus.OK);
          
      }   
      

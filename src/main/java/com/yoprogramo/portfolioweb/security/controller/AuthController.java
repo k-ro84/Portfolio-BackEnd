@@ -84,7 +84,9 @@ public class AuthController {
             return new ResponseEntity(new Mensaje("campos mal puestos"), HttpStatus.BAD_REQUEST);
         
         Authentication authentication
-                = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUsuario.getNombreUsuario(), loginUsuario.getPassword()));
+                = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                        loginUsuario.getNombreUsuario(),
+                        loginUsuario.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtProvider.generateToken(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();

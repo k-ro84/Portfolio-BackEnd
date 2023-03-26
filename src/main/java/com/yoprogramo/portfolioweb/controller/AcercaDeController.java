@@ -60,7 +60,7 @@ public class AcercaDeController {
     }
    
     
-      @PreAuthorize("hasRole('ADMIN')")
+    //  @PreAuthorize("hasRole('ADMIN')")
    @PostMapping("/create")
    public ResponseEntity <?> create(@RequestBody DtoAcercaDe DtoacercaDe){
        if(StringUtils.isBlank(DtoacercaDe.getNombre()))
@@ -78,7 +78,7 @@ public class AcercaDeController {
           return new ResponseEntity(new Mensaje("Persona creada con exito!"),HttpStatus.OK);
    }
    
-     @PreAuthorize("hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')")
    @PutMapping("/update/{id}")
      public ResponseEntity <?> update( @PathVariable("id")int id,@RequestBody DtoAcercaDe DtoacercaDe){
       if(!serviceAcercaDe.existsById(id)) 
@@ -100,7 +100,7 @@ public class AcercaDeController {
           return new ResponseEntity(new Mensaje("Persona actualizada!"),HttpStatus.OK);
      }
      
-       @PreAuthorize("hasRole('ADMIN')")
+     //  @PreAuthorize("hasRole('ADMIN')")
      @DeleteMapping("/delete/{id}")
      public ResponseEntity <?> delete(@PathVariable("id")int id){
          if(!serviceAcercaDe.existsById(id)) {
